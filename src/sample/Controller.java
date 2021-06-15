@@ -11,6 +11,8 @@ public class Controller {
 
     @FXML
     private Label result;
+    @FXML
+    private Label equation;
 
     private double num1 = 0;
     private double num2 = 0;
@@ -18,6 +20,7 @@ public class Controller {
     private boolean start = true;
     private boolean afterEquals = false;
     private boolean operatorJustPressed = false;
+    private int numOfOperators = 0;
 
     private boolean decimalUsed = false;
 
@@ -36,6 +39,7 @@ public class Controller {
         if (afterEquals){        //if number is entered right after using equals clear screen
             result.setText("");
             afterEquals = false;
+            equation.setText("");
         }
         //add numbers clicked to label
         result.setText(result.getText() + value);
@@ -46,29 +50,60 @@ public class Controller {
         //get value of operator on button
         String value = ((Button)e.getSource()).getText();
         decimalUsed = false;
-
+        equation.setText(equation.getText() + " " + result.getText());
         if (afterEquals){
             operator = value;
             num1 = Double.parseDouble(result.getText());
+            int x = 0;
+            if (num1 % 1 == 0){
+                x = (int) num1;
+                equation.setText(String.valueOf(x) + " " + operator);
+            } else{
+                equation.setText(String.valueOf(num1) + " " + operator);
+            }
             afterEquals = false;
             operatorJustPressed = true;
         }
 
         if (!value.equals("=")){                    //if button is +,-,x, or /
-            if (!operator.isEmpty())                //if operator is not empty exit out of method (prevent hitting operator twice)
+           if (operatorJustPressed){               //prevent hitting operator twice
                 return;
+            }
 
-            operator = value;
-            num1 = Double.parseDouble(result.getText());
+            numOfOperators++;
+            int x = 0;
+            if (numOfOperators > 1){
+                num2 = Double.parseDouble(result.getText());
+                num1 = calculate();
+                if (num1 % 1 == 0){
+                    x = (int) num1;
+                }
+                operator = value;
+                num2 = 0;
+                equation.setText(x + " " + operator);
+            } else{
+                operator = value;
+                num1 = Double.parseDouble(result.getText());
+                equation.setText(equation.getText() + " " + operator);
+            }
             operatorJustPressed = true;
+
         } else{                   //if operator is "="
             if (operator.isEmpty())        //if no other operator was used besides = exit method
                 return;
             num2 = Double.parseDouble(result.getText());
             double output = calculate();
-            result.setText(String.valueOf(output));
+            int x = 0;
+            if (output % 1 == 0){
+                x = (int) output;
+                result.setText(String.valueOf(x));
+            } else{
+                result.setText(String.valueOf(output));
+            }
+            equation.setText(equation.getText() + " = ");
             operator = "";
             afterEquals = true;
+            numOfOperators = 0;
         }
     }
 
@@ -141,9 +176,12 @@ public class Controller {
                 num1 = 0;
                 num2 = 0;
                 result.setText("");
+                equation.setText("");
                 break;
             case "CE":
                 result.setText("");
+                String newEquation;
+                equation.setText(equation.getText());
                 break;
             case "⌫":
                 String text = result.getText();

@@ -12,7 +12,7 @@
 
 <AnchorPane id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <Box id="resultBox" depth="100" height="100" layoutX="160.0" layoutY="67.0" width="300.0" />
+      <Box id="resultBox" depth="100" height="80.0" layoutX="160.0" layoutY="80.0" width="300.0" />
       <GridPane layoutY="137.0" prefHeight="326.0" prefWidth="320.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -146,12 +146,23 @@
             </Button>
          </children>
       </GridPane>
-      <Label fx:id="result" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="24.0" prefHeight="85.0" prefWidth="300.0" text="0">
+      <Label fx:id="result" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="47.0" prefHeight="66.0" prefWidth="300.0" text="0">
          <padding>
             <Insets right="10.0" />
          </padding>
          <font>
             <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="equation" alignment="CENTER_RIGHT" layoutX="13.0" layoutY="14.0" prefHeight="17.0" prefWidth="294.0" textFill="WHITE">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets right="5.0" />
+         </padding>
+         <font>
+            <Font size="14.0" />
          </font>
       </Label>
    </children>
